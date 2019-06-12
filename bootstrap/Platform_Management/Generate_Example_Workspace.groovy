@@ -3,7 +3,7 @@ def platformManagementFolderName= "/Platform_Management"
 def platformManagementFolder = folder(platformManagementFolderName) { displayName('Platform Management') }
 
 def rootUrl = "${ROOT_URL}"
-gitlabRootUrl = rootUrl.replaceAll("jenkins","gitlab")
+gerritRootUrl = rootUrl.replaceAll("jenkins","gerrit")
 
 
 // Jobs
@@ -20,7 +20,7 @@ generateExampleWorkspaceJob.with{
         stringParam("workspaceDeveloper","Developer","")
         stringParam("workspaceViewer","Viewer","")
         stringParam("cartridgeURL","https://github.com/VictorCabello/adop-cartridge-java-jhipster.git","")
-        stringParam("scmProvider",gitlabRootUrl + " - ssh (adop-gitlab-ssh)","")
+        stringParam("scmProvider", gerritRootUrl + " - ssh (adop-gitlab-ssh)","")
     }
     properties {
         rebuild {
