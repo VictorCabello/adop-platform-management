@@ -11,7 +11,7 @@ def generateExampleWorkspaceJob = workflowJob(platformManagementFolderName + "/G
 
 generateExampleWorkspaceJob.with{
     parameters{
-        stringParam("projectName","ExampleProject","")
+        stringParam("projectName","ExampleProjectJHipster","")
         stringParam("projectAdmin","Admin","")
         stringParam("projectDeveloper","Developer","")
         stringParam("projectViewer","Viewer","")
