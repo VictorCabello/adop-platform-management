@@ -322,50 +322,6 @@ fi
     environmentVariables {
       propertiesFile('${WORKSPACE}/scm_provider.properties')
     }
-
-    systemGroovy {
-        source {
-            stringSystemScriptSource {
-                script {
-                script('''
-import jenkins.model.*;
-import groovy.io.FileType;
-import hudson.FilePath;
-
-def jenkinsInstace = Jenkins.instance;
-def projectName = build.getEnvironment(listener).get('PROJECT_NAME');
-def cartHome = build.getEnvironment(listener).get('CART_HOME');
-def workspace = build.workspace.toString();
-def cartridgeWorkspace = workspace + '/' + cartHome + '/jenkins/jobs/xml/';
-def channel = build.workspace.channel;
-FilePath filePath = new FilePath(channel, cartridgeWorkspace);
-List<FilePath> xmlFiles = filePath.list('**/*.xml');
-
-xmlFiles.each {
-  File configFile = new File(it.toURI());
-
-  String configXml = it.readToString();
-
-  ByteArrayInputStream xmlStream = new ByteArrayInputStream(
-    configXml.getBytes());
-
-  String jobName = configFile.getName()
-      .substring(0,
-                   configFile
-                   .getName()
-                    .lastIndexOf('.'));
-
-  jenkinsInstace.getItem(projectName,jenkinsInstace)
-    .createProjectFromXML(jobName, xmlStream);
-
-  println '[INFO] - Imported XML job config: ' + it.toURI();
-}
-''')
-                    sandbox(true)
-                }
-            }
-        }
-    }
   environmentVariables {
       env('PLUGGABLE_SCM_PROVIDER_PATH','${WORKSPACE}/job_dsl_additional_classpath/')
       env('PLUGGABLE_SCM_PROVIDER_PROPERTIES_PATH','${WORKSPACE}/datastore/pluggable/scm')
